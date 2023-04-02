@@ -28,13 +28,3 @@ new_df = chunk_text(df, width=10, overlap=5)
 # print the result
 print(new_df)
 ```
-This will output:
-
-  id      text_chunk  start_index
-0  1  This is some            0
-1  1  e text that             5
-2  1   we want to             10
-3  1  chunk.               15
-4  2  This is anothe          0
-5  2  r piece of te          5
-6  2  xt.                 10
