@@ -27,7 +27,7 @@ new_df = chunk_text(df, width=10, overlap=5)
 
 # print the result
 print(new_df)
-
+```
 This will output:
 
   id      text_chunk  start_index
