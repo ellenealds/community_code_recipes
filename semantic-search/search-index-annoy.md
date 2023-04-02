@@ -21,7 +21,7 @@ from cohere import CohereAPI
 from annoy import AnnoyIndex
 
 # create a CohereAPI object
-co = CohereAPI('<API_KEY>')
+co = cohere.Client('<API_KEY>')
 
 # create a dataframe with some text
 df = pd.DataFrame({'id': [1, 2],
@@ -34,6 +34,15 @@ embeddings = np.array(co.embed(texts=list(df['text']),
                                 truncate="RIGHT").embeddings)
 
 # build an Annoy search index using the embeddings
-build_search_index(embeddings, 10, 'search_index.ann')
+search_index = AnnoyIndex(embeddings.shape[1], 'angular')
+for i in range(len(embeddings)):
+    search_index.add_item(i, embeddings[i])
+search_index.build(10) # 10 trees
+
+# search for similar documents using the search function
+results = search('search text', 1, df, search_index, co)
+
+# print the search results
+print(results)
 
 ```
