@@ -18,4 +18,12 @@ This function takes a pandas dataframe and a Cohere API key as input and returns
 ### Example Usage
 
 ```python
+import cohere
+co = cohere.Client('API_KEY')
+def embed(cluster):
+    response = co.embed(
+      model='large',
+      texts=cluster
+    )
+    return response.embeddings
 ```
