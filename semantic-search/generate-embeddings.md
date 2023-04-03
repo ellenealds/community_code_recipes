@@ -20,10 +20,10 @@ This function takes a pandas dataframe and a Cohere API key as input and returns
 ```python
 import cohere
 co = cohere.Client('API_KEY')
-def embed(cluster):
+def embed(text):
     response = co.embed(
       model='large',
-      texts=cluster
+      texts=text
     )
     return response.embeddings
 ```
