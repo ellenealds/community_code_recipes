@@ -22,8 +22,8 @@ import cohere
 co = cohere.Client('API_KEY')
 def embed(text):
     response = co.embed(
-      model='large',
-      texts=text
-    )
+        model='large',
+        texts=text
+        )
     return response.embeddings
 ```
