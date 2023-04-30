@@ -1,0 +1,46 @@
+# Testing Prompts Quickly
+
+When developing applications with generative end points, it's important to setup a development environment where you can quickly test prompts for a given model.
+In this notebook, we'll demonstrate how to create such a demo application, which can help accelerate innovation with these APIs.
+
+# Streamlit Prototyping
+
+Here, we'll demonstrate how to use Streamlit, Langchain, and Pandas packages to create a rapid prompt iteration environment. This app allows you to submit prompts, and log their results to a history dataframe while you work.
+
+``` python
+import streamlit as st
+from langchain.llms import Cohere
+import pandas as pd
+
+# Adjust this global instantiation of the Cohere api to set parameters across calls
+
+llm = Cohere()
+
+if "output" not in st.session_state:
+    st.session_state["output"] = ""
+
+if "history" not in st.session_state:
+    st.session_state["history"] = pd.DataFrame(columns = ["input_prompt", "completion"])
+
+st.title("Rapid Prompt Iteration with Streamlit, Cohere, and Langchain")
+
+
+prompt = st.text_input(label = "Write your prompt here!", value = "")
+
+def return_completion(prompt):
+    st.session_state.output = llm(prompt)
+
+gen_result = st.button("Generate Completion")
+
+if prompt != "" and gen_result:
+    result = llm(prompt)
+    result_dict = {
+        "input_prompt": prompt,
+        "completion": result
+    }
+    st.session_state["history"] = pd.concat([st.session_state["history"], pd.DataFrame([result_dict])],
+    ignore_index=True)
+
+st.write(st.session_state.history)
+
+```
